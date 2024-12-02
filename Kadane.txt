@@ -1,0 +1,30 @@
+Important edge case: all -ve nos in array
+
+Brute: O(n3) - outer i & j to define start and end indices of subarray, inner k to calculate sum of that subarray => n2 * n = n3
+
+Better: O(n2) - instead of recalculating sum of subarray each time, just add curr elem to prev sum. So inner loop not needed.
+
+Optimal: O(n), O(1)
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int osum = nums[0]; // overall sum
+        int csum = nums[0]; // current sum
+        
+        for (int i=1; i<nums.length; i++){
+            if(csum < 0) { // if sum coming from the back is -ve, forget prev elem and start subarray afresh from curr idx
+                csum = nums[i];
+            } else {
+                // else include curr elem in the prev subarray
+                csum += nums[i];
+            }
+            
+            if(csum > osum) {  // update max
+                osum = csum;
+            }
+        }
+        
+        return osum;
+    }
+
+}
