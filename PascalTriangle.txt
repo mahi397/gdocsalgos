@@ -1,0 +1,38 @@
+n2: my sol. just pattern recognition
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> outer = new ArrayList<>();
+
+        for (int i=0; i<numRows; i++) {
+            List<Integer> inner = new ArrayList<>();
+            // first elem = 1
+            inner.add(1);
+
+            for(int j=i-1; j>=1; j--){
+                // get prev list
+                List<Integer> prev = outer.get(outer.size()-1);
+                // nth elem of curr list = n-1th + nth of prev list
+                // 1st = 0th + 1st of prev
+                // 2nd = 1st + 2nd of prev
+                // j = 1 would give 0th and 1st at j-1 and j, hence lower bound of j = 1
+                // last elem of curr list = i-1. so j starts there
+                int prevnm1 = prev.get(j-1);
+                int prevn = prev.get(j);
+                inner.add(prevnm1 + prevn);
+            }
+
+            // last elem = 1                
+            if(i > 0 && i <= numRows-1) {
+                inner.add(1);
+            }
+
+            outer.add(inner);
+        }
+
+        return outer;
+    }
+}
+
+
+>>>> Better: Using nCr formula
